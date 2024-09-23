@@ -1,4 +1,5 @@
 ﻿using DAL.DTO.Req;
+using DAL.DTO.Res;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,7 @@ namespace DAL.Repositories.Services.Interfaces
     public interface IUserServices
     {
         Task<string> Register(ReqRegisterUserDto register);
+
+        Task<List<ResUserDto>> GetAllUsers();
     }
 }

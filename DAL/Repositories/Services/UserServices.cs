@@ -1,4 +1,5 @@
 ﻿using DAL.DTO.Req;
+using DAL.DTO.Res;
 using DAL.Models;
 using DAL.Repositories.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +23,20 @@ namespace DAL.Repositories.Services
             _context = context;
         }
 
+        public async Task<List<ResUserDto>> GetAllUsers()
+        {
+            return await _context.MstUsers
+                .Where(user => user.Role != "admin")
+                .Select(user => new ResUserDto
+                {
+                    Id = user.Id,
+                    Name = user.Name,
+                    Email = user.Email,
+                    Role = user.Role,
+                    Balance = user.Balance
+                }).ToListAsync();
+            
+        }
 
         public async Task<string> Register(ReqRegisterUserDto register)
         {
@@ -47,5 +62,7 @@ namespace DAL.Repositories.Services
 
             return newUser.Name;
         }
+
+
     }
 }

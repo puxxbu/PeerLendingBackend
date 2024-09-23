@@ -70,5 +70,30 @@ namespace BE_PeerLending.Controllers
                 });
             }
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllUsers()
+        {
+            try
+            {
+                var users = await _userservices.GetAllUsers();
+
+                return Ok(new ResBaseDto<List<ResUserDto>>
+                {
+                    Success = true,
+                    Message = "List of users",
+                    Data = users
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new ResBaseDto<object>
+                {
+                    Success = false,
+                    Message = ex.Message,
+                    Data = null
+                });
+            }
+        }
     }
 }
