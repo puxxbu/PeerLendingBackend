@@ -13,5 +13,13 @@ namespace DAL.Repositories.Services.Interfaces
         Task<string> Register(ReqRegisterUserDto register);
 
         Task<List<ResUserDto>> GetAllUsers();
+
+        Task<ResLoginDto> Login(ReqLoginDto reqLogin);
+
+        Task<ResUpdateDto> UpdateUserbyAdmin(ReqUpdateAdminDto reqUpdate, string id);
+
+        Task<ResUpdateDto> UpdateUser(string reqName, string id);
+
+        Task<string> Delete(string id);
     }
 }
