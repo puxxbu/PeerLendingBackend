@@ -167,7 +167,7 @@ namespace DAL.Repositories.Services
 
         public async Task<ResUpdateDto> UpdateUser(string reqName, string id)
         {
-            var user = _context.MstUsers.SingleOrDefault(x => x.Id == id);
+            var user = await _context.MstUsers.SingleOrDefaultAsync(x => x.Id == id);
             if (user == null)
             {
                 throw new Exception("User not found!");
@@ -185,6 +185,28 @@ namespace DAL.Repositories.Services
             };
 
             return updateRes;
+        }
+
+        public async Task<ResGetUserDto> GetById(string id)
+        {
+            var user =  await _context.MstUsers.SingleOrDefaultAsync(x => x.Id == id);
+
+            if (user == null)
+            {
+                throw new Exception("User not found!");
+            }
+
+            var resUser = new ResGetUserDto
+            {
+                Id = user.Id,
+                Name = user.Name,
+                Role = user.Role,
+                Balance = user.Balance
+            };
+
+
+            return resUser;
+            //throw new NotImplementedException();
         }
     }
 }

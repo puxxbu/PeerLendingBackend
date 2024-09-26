@@ -215,5 +215,40 @@ namespace BE_PeerLending.Controllers
         }
 
 
+        [HttpGet]
+        public async Task<IActionResult> GetUserbyId([FromQuery] string id)
+        {
+            try
+            {
+                var response = await _userservices.GetById(id);
+                return Ok(new ResBaseDto<object>
+                {
+                    Success = true,
+                    Message = "User found",
+                    Data = response
+                });
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message == "User not found")
+                {
+                    return BadRequest(new ResBaseDto<string>
+                    {
+                        Success = false,
+                        Message = ex.Message,
+                        Data = null
+                    });
+                }
+
+                return StatusCode(StatusCodes.Status500InternalServerError, new ResBaseDto<string>
+                {
+                    Success = false,
+                    Message = ex.Message,
+                    Data = null
+                });
+
+            }
+
+        }
     }
 }
